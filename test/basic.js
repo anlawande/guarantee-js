@@ -10,8 +10,10 @@ describe('Basic', function(){
 		obj.abc = function() {
 			a += 2;
 		}
+		
+		obj = guarantee(obj);
 
-		guarantee(obj, "abc", function() {
+		obj.guarantee("abc", function() {
 			console.log("Called before!");
 			a = 3;
 		});

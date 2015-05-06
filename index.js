@@ -1,14 +1,20 @@
 var Promise = require("promise");
 
-function guarantee(object, target, sequence) {
-	var origTarget = object[target];
+var KEYWORD = "guarantee";
+
+function guarantee(target, sequence) {
+	var origTarget = this[target];
 	sequence = sequence.push ? sequence : [sequence];
 	
-	object[target] = function() {
+	this[target] = function() {
 		for(var i = 0; i < sequence.length; i++)
 			sequence[i]();
 		origTarget();
 	}
 }
 
-module.exports = guarantee;
+module.exports = function(object) {
+	object["guarantee"] = guarantee;
+	
+	return object;
+};
